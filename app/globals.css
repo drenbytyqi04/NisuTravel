@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-deep: #047857;
+    --brand-mid: #059669;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Hapësirë nën navbar-in fiks kur kërcehet te një seksion me #ankorë. */
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    @apply bg-offwhite text-charcoal antialiased;
+    font-feature-settings: 'kern' 1;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display uppercase tracking-wide;
+  }
+
+  /* Fokus i dukshëm për navigim me tastierë (kërkesë e qasshmërisë). */
+  :focus-visible {
+    outline: 3px solid var(--brand-mid);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Respekton preferencën e sistemit për më pak lëvizje. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-content {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8;
+  }
+
+  /* Titujt e seksioneve — sans i kondensuar, i madh dhe i sigurt. */
+  .section-title {
+    @apply font-display text-4xl leading-[0.95] sm:text-5xl lg:text-6xl;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-sm font-semibold tracking-wide transition-all duration-200 sm:text-base;
+  }
+
+  .btn-primary {
+    @apply btn bg-emerald-deep text-white shadow-soft hover:bg-emerald-mid hover:shadow-lift;
+  }
+
+  .btn-whatsapp {
+    @apply btn bg-[#25D366] text-[#04301a] shadow-soft hover:bg-[#1fbe5a] hover:shadow-lift;
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/40 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20;
+  }
+
+  .btn-outline {
+    @apply btn border border-emerald-deep/25 bg-white text-emerald-deep hover:border-emerald-deep/50 hover:bg-emerald-soft;
+  }
+
+  .card {
+    @apply rounded-2xl bg-white shadow-soft;
+  }
+
+  /* Etiketë e vogël mbi titujt e seksioneve. */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.2em] text-emerald-mid;
+  }
+}

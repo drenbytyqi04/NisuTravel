@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LOGO VENDMBAJTËS (PLACEHOLDER)
+  Zëvendësojeni këtë skedar me logon zyrtare të Nisu Travel duke ruajtur të
+  njëjtin emër: /public/logo.svg. Logoja duhet të jetë E BARDHË (monokrome),
+  sepse shfaqet mbi sfond të gjelbër ose mbi fotografi të errësuara.
+  Përmasat: 320 × 64 (raport 5:1 — po ta ndryshoni, përditësoni edhe
+  llogaritjen e lartësisë te /components/Logo.tsx).
+  Shënim: në SVG, brenda komenteve nuk lejohen dy viza radhazi.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" width="320" height="64" role="img" aria-label="Nisu Travel">
+  <title>Nisu Travel</title>
+  <g fill="#FFFFFF">
+    <!-- Aeroplani që pret majën e shkronjës N -->
+    <path d="M20 17.5 L64 1 L61 9.5 L48 15 L59.5 18 L57.5 22.5 L42 21.5 L34 25 L35.5 19.5 Z"/>
+    <!-- Gjurma e fluturimit -->
+    <path d="M66 2.5 C78 0.5 90 1.5 98 5" stroke="#FFFFFF" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <!-- Fjala "NISU" -->
+    <text x="28" y="42"
+          font-family="'Bebas Neue', 'Barlow Condensed', 'Arial Narrow', Impact, sans-serif"
+          font-size="38" font-weight="700" letter-spacing="2.5">NISU</text>
+    <!-- Fjala "TRAVEL" -->
+    <text x="30" y="61"
+          font-family="'Bebas Neue', 'Barlow Condensed', 'Arial Narrow', Impact, sans-serif"
+          font-size="18" font-weight="500" letter-spacing="7.5" opacity="0.92">TRAVEL</text>
+  </g>
+</svg>
