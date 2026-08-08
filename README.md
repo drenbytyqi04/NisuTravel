@@ -170,17 +170,18 @@ zëvendësuar me një hartë reale janë në koment te `app/kontakti/page.tsx`.
 
 ## Si funksionon kërkesa për ofertë
 
-Faqja **nuk ka motor rezervimesh**. Shiriti i kërkimit në ballinë duket si një
-motor kërkimi, por në vend që të thërrasë një API:
+Faqja **nuk ka motor rezervimesh**, dhe as nuk pretendon se ka. Nën hero
+qëndron seksioni "Si të merrni ofertën tuaj"
+(`components/home/HowItWorks.tsx`) — tre hapa që e shpjegojnë rrugën reale:
 
-1. i shndërron fushat e plotësuara (Nga, Për, Data, Udhëtarë) në tekst,
-2. e kodon tekstin në një lidhje `wa.me`,
-3. e hap bisedën në WhatsApp me mesazhin gati për dërgim.
+1. klienti shkruan në WhatsApp ose plotëson formularin,
+2. agjencia kthen ofertën,
+3. udhëtimi organizohet nga agjencia.
 
-E gjithë kjo logjikë qëndron te `lib/whatsapp.ts` dhe përdoret nga shiriti i
-kërkesës, faqet e destinacioneve dhe çdo buton WhatsApp. Kur të lidhet API-ja e
-vërtetë e rezervimeve, ndryshohet vetëm `handleSubmit` te
-`components/home/EnquiryBar.tsx`.
+Çdo buton "Kërko ofertë" hap një bisedë WhatsApp me mesazh të parambushur.
+Logjika qëndron te `lib/whatsapp.ts` dhe përdoret nga ky seksion, nga faqet e
+destinacioneve dhe nga çdo buton tjetër WhatsApp — prandaj numri dhe mesazhet
+ndryshohen në një vend të vetëm.
 
 ---
 

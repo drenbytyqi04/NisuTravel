@@ -1,7 +1,7 @@
 import { Logo } from '@/components/Logo';
 import { SmartImage } from '@/components/SmartImage';
 import { WhatsAppIcon, ArrowRightIcon } from '@/components/Icons';
-import { EnquiryBar } from '@/components/home/EnquiryBar';
+import { HowItWorks } from '@/components/home/HowItWorks';
 import { media } from '@/data/media';
 import { whatsappUrl } from '@/lib/whatsapp';
 
@@ -56,9 +56,9 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Shiriti i kërkesës — mbivendoset mbi fund të hero-s. */}
+      {/* Kartela "Si funksionon" — mbivendoset mbi fund të hero-s. */}
       <div className="container-content relative -mt-32 sm:-mt-24">
-        <EnquiryBar />
+        <HowItWorks />
       </div>
     </section>
   );
