@@ -129,10 +129,17 @@ një sfond me gradient të markës në vend të një fotoje të thyer.
 
 ### Logoja
 
-`public/logo.svg` është **vendmbajtëse**. Zëvendësojeni me logon zyrtare duke
-ruajtur të njëjtin emër dhe raportin 5:1 (wordmark i **bardhë**, sepse shfaqet
-mbi sfond të gjelbër ose mbi foto të errësuara). Nëse ndryshoni raportin,
-përditësoni llogaritjen e lartësisë te `components/Logo.tsx`.
+`public/logo.svg` është një **rindërtim vendmbajtës** i logos zyrtare: wordmark
+"NISU TRAVEL" në një rresht, me aeroplan mbi shkronjën N.
+
+Zëvendësojeni me skedarin origjinal duke ruajtur të njëjtin emër. Logoja duhet
+të jetë **e bardhë** dhe me sfond transparent, sepse shfaqet mbi sfond të
+gjelbër ose mbi foto të errësuara. Raporti aktual është 4:1 — nëse skedari juaj
+ka raport tjetër, ndryshoni `LOGO_RATIO` te `components/Logo.tsx`.
+
+> Nëse origjinali është PNG, vendoseni si `public/logo.png` dhe ndryshoni
+> `src` te `components/Logo.tsx`. Prania e `unoptimized` mbetet e nevojshme
+> vetëm për SVG; për PNG mund të hiqet.
 
 ---
 
