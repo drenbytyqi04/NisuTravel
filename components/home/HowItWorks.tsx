@@ -5,7 +5,7 @@ import {
   TakeoffIcon,
   WhatsAppIcon,
 } from '@/components/Icons';
-import { Reveal } from '@/components/Reveal';
+import { Stagger, StaggerItem } from '@/components/Reveal';
 import { whatsappUrl } from '@/lib/whatsapp';
 
 /**
@@ -51,9 +51,9 @@ export function HowItWorks() {
         </p>
       </div>
 
-      <ol className="mt-10 grid gap-8 md:grid-cols-3">
+      <Stagger as="ol" className="mt-10 grid gap-8 md:grid-cols-3">
         {steps.map((step, index) => (
-          <Reveal as="li" key={step.title} delay={index * 0.1}>
+          <StaggerItem as="li" key={step.title}>
             <div className="flex items-center gap-3">
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-soft text-emerald-deep">
                 <step.icon className="h-6 w-6" />
@@ -69,9 +69,9 @@ export function HowItWorks() {
             <p className="mt-2 text-sm leading-relaxed text-charcoal/70">
               {step.description}
             </p>
-          </Reveal>
+          </StaggerItem>
         ))}
-      </ol>
+      </Stagger>
 
       <div className="mt-10 flex flex-col gap-3 border-t border-charcoal/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-charcoal/60">

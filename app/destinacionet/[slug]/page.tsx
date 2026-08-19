@@ -6,7 +6,7 @@ import { CtaBand } from '@/components/CtaBand';
 import { DestinationCard } from '@/components/DestinationCard';
 import { DestinationJsonLd } from '@/components/JsonLd';
 import { PageHero } from '@/components/PageHero';
-import { Reveal } from '@/components/Reveal';
+import { Reveal, Stagger, StaggerItem } from '@/components/Reveal';
 import { destinations, getDestination } from '@/data/destinations';
 import { site } from '@/data/site';
 import { destinationMessage, whatsappUrl } from '@/lib/whatsapp';
@@ -154,13 +154,13 @@ export default async function DestinationPage({ params }: PageProps) {
         <section className="bg-white py-16 lg:py-20">
           <div className="container-content">
             <h2 className="font-display text-3xl tracking-wide">Destinacione të ngjashme</h2>
-            <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {related.map((item, index) => (
-                <Reveal as="li" key={item.slug} delay={index * 0.08}>
+            <Stagger as="ul" className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {related.map((item) => (
+                <StaggerItem as="li" key={item.slug}>
                   <DestinationCard destination={item} />
-                </Reveal>
+                </StaggerItem>
               ))}
-            </ul>
+            </Stagger>
           </div>
         </section>
       ) : null}

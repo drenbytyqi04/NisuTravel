@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Logo } from '@/components/Logo';
 import { CloseIcon, MenuIcon, WhatsAppIcon } from '@/components/Icons';
@@ -15,11 +16,19 @@ const links = [
 ];
 
 /**
- * Navbar-i ngjitës: transparent mbi hero, i mbushur me smerald pas skrollimit.
- * Në faqet e brendshme (jo ballina) fillon i mbushur, sepse nuk ka hero të errët.
+ * Navbar-i ngjitës.
+ *
+ * Mbi hero është transparent; pas skrollimit mbushet me smerald, ngushtohet
+ * pak, merr `backdrop-blur` dhe një hije të hollë. Në faqet e brendshme nis
+ * i mbushur, sepse aty nuk ka hero të errët.
+ *
+ * Shënim mbi lartësinë: ndryshimi i saj animohet me tranzicion CSS. Header-i
+ * është `fixed`, pra jashtë rrjedhës së dokumentit — ngushtimi nuk e lëviz
+ * përmbajtjen e faqes dhe nuk prodhon zhvendosje layout-i (CLS).
  */
 export function Navbar() {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -48,12 +57,24 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        solid ? 'bg-emerald-deep shadow-soft' : 'bg-gradient-to-b from-black/45 to-transparent'
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
+        solid
+          ? 'bg-emerald-deep/90 shadow-[0_1px_0_rgba(255,255,255,0.08),0_10px_30px_-16px_rgba(0,0,0,0.55)] backdrop-blur-md supports-[backdrop-filter]:bg-emerald-deep/80'
+          : 'bg-gradient-to-b from-black/45 to-transparent'
       }`}
     >
-      <nav aria-label="Navigimi kryesor" className="container-content flex h-20 items-center justify-between">
-        <Logo width={140} className="h-auto w-[124px] sm:w-[140px]" />
+      <nav
+        aria-label="Navigimi kryesor"
+        className={`container-content flex items-center justify-between transition-[height] duration-300 ease-out ${
+          scrolled ? 'h-16' : 'h-20'
+        }`}
+      >
+        <Logo
+          width={140}
+          className={`h-auto w-[124px] origin-left transition-transform duration-300 ease-out motion-reduce:transform-none sm:w-[140px] ${
+            scrolled ? 'scale-95' : 'scale-100'
+          }`}
+        />
 
         <div className="hidden items-center gap-1 lg:flex">
           {links.map((link) => {
@@ -63,11 +84,21 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 aria-current={active ? 'page' : undefined}
-                className={`rounded-xl px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors hover:bg-white/15 ${
-                  active ? 'bg-white/15' : ''
-                }`}
+                className="relative rounded-xl px-4 py-2 text-sm font-medium tracking-wide text-white transition-colors hover:bg-white/10"
               >
-                {link.label}
+                {/* Treguesi i faqes aktive rrëshqet mes lidhjeve me layoutId. */}
+                {active ? (
+                  <motion.span
+                    layoutId="tregues-navigimi"
+                    className="absolute inset-0 rounded-xl bg-white/15"
+                    transition={
+                      reduceMotion
+                        ? { duration: 0 }
+                        : { type: 'spring', stiffness: 380, damping: 32 }
+                    }
+                  />
+                ) : null}
+                <span className="relative z-10">{link.label}</span>
               </Link>
             );
           })}
@@ -75,7 +106,7 @@ export function Navbar() {
             href={whatsappUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-3 inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-2.5 text-sm font-semibold text-emerald-deep transition-colors hover:bg-emerald-soft"
+            className="ml-3 inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-2.5 text-sm font-semibold text-emerald-deep transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-emerald-soft active:scale-95 motion-reduce:transform-none"
           >
             <WhatsAppIcon className="h-4 w-4" />
             WhatsApp
@@ -87,10 +118,10 @@ export function Navbar() {
           onClick={() => setMenuOpen((open) => !open)}
           aria-expanded={menuOpen}
           aria-controls="menu-mobil"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/15 lg:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/15 active:scale-95 motion-reduce:transform-none lg:hidden"
         >
           <span className="sr-only">{menuOpen ? 'Mbyll menynë' : 'Hap menynë'}</span>
-          {menuOpen ? <MenuIconSwap open /> : <MenuIconSwap />}
+          {menuOpen ? <CloseIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
         </button>
       </nav>
 
@@ -126,8 +157,4 @@ export function Navbar() {
       </div>
     </header>
   );
-}
-
-function MenuIconSwap({ open = false }: { open?: boolean }) {
-  return open ? <CloseIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />;
 }

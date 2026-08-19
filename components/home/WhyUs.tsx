@@ -1,5 +1,5 @@
 import { CheckIcon } from '@/components/Icons';
-import { Reveal } from '@/components/Reveal';
+import { Stagger, StaggerItem } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
 import { reasons } from '@/data/services';
 
@@ -13,9 +13,9 @@ export function WhyUs() {
           description="Jemi agjenci e vogël me shumë përvojë — dhe kjo është pikërisht arsyeja pse ju përgjigjemi shpejt dhe qartë."
         />
 
-        <ul className="grid gap-6 sm:grid-cols-2">
-          {reasons.map((reason, index) => (
-            <Reveal as="li" key={reason.title} delay={index * 0.08}>
+        <Stagger as="ul" className="grid gap-6 sm:grid-cols-2">
+          {reasons.map((reason) => (
+            <StaggerItem as="li" key={reason.title}>
               <div className="card h-full p-7">
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-deep text-white">
                   <CheckIcon className="h-5 w-5" />
@@ -25,9 +25,9 @@ export function WhyUs() {
                   {reason.description}
                 </p>
               </div>
-            </Reveal>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
       </div>
     </section>
   );

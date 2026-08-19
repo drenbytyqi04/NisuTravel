@@ -10,13 +10,19 @@ export function Hero() {
     <section className="relative">
       <div className="relative min-h-[92svh] overflow-hidden pb-40 sm:pb-32 lg:min-h-[88svh]">
         {/* Fotografia — e vetmja foto që ngarkohet me prioritet (LCP). */}
+        {/*
+          Ken Burns: zmadhim shumë i ngadaltë (22s) vetëm me `transform`.
+          Realizohet me CSS, prandaj hero-ja mbetet komponent serveri dhe nuk
+          shton asnjë JavaScript. Prindi ka `overflow-hidden`, që zmadhimi të
+          mos dalë jashtë kornizës.
+        */}
         <SmartImage
           src={media.hero.src}
           alt={media.hero.alt}
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="animate-ken-burns object-cover"
         />
 
         {/* Mbulesa smeraldi për kontrast AA të tekstit të bardhë. */}

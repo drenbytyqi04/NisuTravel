@@ -84,7 +84,7 @@ export function Testimonials() {
                 type="button"
                 onClick={() => go(dotIndex)}
                 aria-current={dotIndex === index ? 'true' : undefined}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
+                className={`h-2.5 rounded-full transition-all duration-300 motion-reduce:transition-none ${
                   dotIndex === index ? 'w-8 bg-emerald-deep' : 'w-2.5 bg-charcoal/20 hover:bg-charcoal/40'
                 }`}
               >

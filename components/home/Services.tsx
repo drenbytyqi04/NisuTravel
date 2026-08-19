@@ -1,5 +1,5 @@
 import { BedIcon, CheckIcon, CompassIcon, PlaneIcon } from '@/components/Icons';
-import { Reveal } from '@/components/Reveal';
+import { Stagger, StaggerItem } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
 import { services, type ServiceIcon } from '@/data/services';
 
@@ -19,12 +19,12 @@ export function Services() {
           description="Tri shërbime, një bisedë. Ju thoni ku doni të shkoni — ne kujdesemi për pjesën tjetër."
         />
 
-        <ul className="mt-14 grid gap-6 md:grid-cols-3">
-          {services.map((service, index) => {
+        <Stagger as="ul" className="mt-14 grid gap-6 md:grid-cols-3">
+          {services.map((service) => {
             const Icon = icons[service.icon];
             return (
-              <Reveal as="li" key={service.id} delay={index * 0.1}>
-                <article className="card h-full p-8 transition-shadow duration-300 hover:shadow-lift">
+              <StaggerItem as="li" key={service.id}>
+                <article className="card h-full p-8 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-lift motion-reduce:transform-none motion-reduce:transition-none">
                   <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-soft text-emerald-deep">
                     <Icon className="h-7 w-7" />
                   </span>
@@ -39,10 +39,10 @@ export function Services() {
                     ))}
                   </ul>
                 </article>
-              </Reveal>
+              </StaggerItem>
             );
           })}
-        </ul>
+        </Stagger>
       </div>
     </section>
   );

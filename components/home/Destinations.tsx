@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRightIcon } from '@/components/Icons';
 import { DestinationCard } from '@/components/DestinationCard';
-import { Reveal } from '@/components/Reveal';
+import { Reveal, Stagger, StaggerItem } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
 import { destinations } from '@/data/destinations';
 
@@ -23,13 +23,13 @@ export function Destinations() {
           </Reveal>
         </div>
 
-        <ul className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {destinations.map((destination, index) => (
-            <Reveal as="li" key={destination.slug} delay={(index % 4) * 0.08}>
+        <Stagger as="ul" className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {destinations.map((destination) => (
+            <StaggerItem as="li" key={destination.slug}>
               <DestinationCard destination={destination} />
-            </Reveal>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
       </div>
     </section>
   );

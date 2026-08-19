@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { WhatsAppFloat } from '@/components/WhatsAppFloat';
+import { LoaderSeenScript, PageLoader } from '@/components/PageLoader';
 import { TravelAgencyJsonLd } from '@/components/JsonLd';
 import { site } from '@/data/site';
 
@@ -68,6 +69,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="sq" className={`${display.variable} ${body.variable}`}>
       <body className="flex min-h-screen flex-col">
+        {/* Duhet të jetë elementi i parë: vendos klasën para se ngarkuesi të lexohet. */}
+        <LoaderSeenScript />
+
+        {/*
+          Rrjetë sigurie pa JavaScript: animacionet e skrollimit i nisin
+          elementet me `opacity: 0`. Nëse skripti nuk ngarkohet, kjo rregull i
+          kthen menjëherë në gjendje të dukshme, që përmbajtja të mbetet e
+          lexueshme.
+        */}
+        <noscript>
+          <style>{'[data-reveal]{opacity:1!important;transform:none!important}'}</style>
+        </noscript>
+
         <TravelAgencyJsonLd />
         <a
           href="#permbajtja"
@@ -81,6 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <Footer />
         <WhatsAppFloat />
+        <PageLoader />
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRightIcon, TakeoffIcon, WhatsAppIcon } from '@/components/Icons';
-import { Reveal } from '@/components/Reveal';
+import { Stagger, StaggerItem } from '@/components/Reveal';
 import { SmartImage } from '@/components/SmartImage';
 import { media } from '@/data/media';
 import { destinationMessage, whatsappUrl } from '@/lib/whatsapp';
@@ -41,9 +41,9 @@ export function Diaspora() {
             Zvicrës dhe Austrisë, të rezervuara me kohë dhe me çmim të qartë.
           </p>
 
-          <ul className="mt-9 flex flex-wrap gap-3">
-            {countries.map((country, index) => (
-              <Reveal as="li" key={country.name} delay={index * 0.08}>
+          <Stagger as="ul" className="mt-9 flex flex-wrap gap-3">
+            {countries.map((country) => (
+              <StaggerItem as="li" key={country.name}>
                 {country.external ? (
                   <a
                     href={country.href}
@@ -63,9 +63,9 @@ export function Diaspora() {
                     {country.name}
                   </Link>
                 )}
-              </Reveal>
+              </StaggerItem>
             ))}
-          </ul>
+          </Stagger>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <a

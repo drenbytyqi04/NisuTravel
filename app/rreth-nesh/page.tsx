@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { CheckIcon, ShieldIcon, TakeoffIcon, UsersIcon } from '@/components/Icons';
 import { CtaBand } from '@/components/CtaBand';
 import { PageHero } from '@/components/PageHero';
-import { Reveal } from '@/components/Reveal';
+import { Reveal, Stagger, StaggerItem } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
 import { media } from '@/data/media';
 import { reasons } from '@/data/services';
@@ -93,9 +93,9 @@ export default function AboutPage() {
             description="Misioni ynë është ta bëjmë planifikimin e udhëtimit aq të thjeshtë sa një bisedë e shkurtër — me informacion të qartë, pa tarifa të fshehura dhe me përkrahje kur ju duhet."
           />
 
-          <ul className="mt-14 grid gap-6 md:grid-cols-3">
-            {values.map((value, index) => (
-              <Reveal as="li" key={value.title} delay={index * 0.1}>
+          <Stagger as="ul" className="mt-14 grid gap-6 md:grid-cols-3">
+            {values.map((value) => (
+              <StaggerItem as="li" key={value.title}>
                 <div className="h-full rounded-2xl bg-offwhite p-8">
                   <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-deep text-white">
                     <value.icon className="h-7 w-7" />
@@ -103,9 +103,9 @@ export default function AboutPage() {
                   <h3 className="mt-6 font-display text-2xl tracking-wide">{value.title}</h3>
                   <p className="mt-3 leading-relaxed text-charcoal/70">{value.description}</p>
                 </div>
-              </Reveal>
+              </StaggerItem>
             ))}
-          </ul>
+          </Stagger>
         </div>
       </section>
 
@@ -117,9 +117,9 @@ export default function AboutPage() {
             description="Mbi gjithçka tjetër, klientët kthehen sepse e dinë se kanë me kë të flasin kur diçka ndryshon."
           />
 
-          <ul className="grid gap-4 sm:grid-cols-2">
-            {reasons.map((reason, index) => (
-              <Reveal as="li" key={reason.title} delay={index * 0.08}>
+          <Stagger as="ul" className="grid gap-4 sm:grid-cols-2">
+            {reasons.map((reason) => (
+              <StaggerItem as="li" key={reason.title}>
                 <div className="flex h-full gap-3 rounded-2xl bg-white p-6 shadow-soft">
                   <CheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-mid" />
                   <div>
@@ -129,9 +129,9 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </div>
-              </Reveal>
+              </StaggerItem>
             ))}
-          </ul>
+          </Stagger>
         </div>
       </section>
 
@@ -143,9 +143,9 @@ export default function AboutPage() {
             description="Një ekip i vogël, i specializuar dhe i arritshëm — në zyrë, në telefon ose në WhatsApp."
           />
 
-          <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger as="ul" className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {team.map((member, index) => (
-              <Reveal as="li" key={`${member.name}-${index}`} delay={index * 0.1}>
+              <StaggerItem as="li" key={`${member.name}-${index}`}>
                 <div className="h-full rounded-2xl bg-offwhite p-8 text-center">
                   {/* Vend për fotografinë e anëtarit të ekipit. */}
                   <span
@@ -157,9 +157,9 @@ export default function AboutPage() {
                   <h3 className="mt-6 font-display text-xl tracking-wide">{member.name}</h3>
                   <p className="mt-1.5 text-sm text-charcoal/60">{member.role}</p>
                 </div>
-              </Reveal>
+              </StaggerItem>
             ))}
-          </ul>
+          </Stagger>
         </div>
       </section>
 

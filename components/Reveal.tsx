@@ -1,32 +1,127 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import type { ReactNode } from 'react';
+
+/**
+ * PRIMITIVAT E ANIMACIONIT NË SKROLLIM
+ * ---------------------------------------------------------------------------
+ * Të gjitha animohen VETËM me `opacity` dhe `transform`, prandaj nuk shkaktojnë
+ * rillogaritje të layout-it dhe mbeten të buta edhe në celular.
+ *
+ * Kur sistemi kërkon `prefers-reduced-motion`, elementet shfaqen menjëherë në
+ * gjendjen e tyre përfundimtare — pa lëvizje fare.
+ *
+ *   <Reveal>            një element i vetëm
+ *   <Stagger><StaggerItem>…   listë ku elementet hyjnë njëri pas tjetrit
+ *
+ * Elementet nisin me `opacity: 0` edhe në HTML-në e serverit. Që përmbajtja të
+ * mos mbetet e padukshme nëse JavaScript-i dështon, secili mban atributin
+ * `data-reveal`, të cilin një rregull CSS te <noscript> (shih app/layout.tsx)
+ * e kthen në gjendje të dukshme.
+ */
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+const DISTANCE = 18;
+
+/** Vonesa mes elementeve të një liste (sekonda). */
+const STAGGER_STEP = 0.09;
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: DISTANCE },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
+};
+
+type ElementTag = 'div' | 'section' | 'li' | 'article';
 
 type RevealProps = {
   children: ReactNode;
-  /** Vonesa në sekonda — përdoret për të "shkallëzuar" elementet në rrjetë. */
+  /** Vonesa në sekonda — për të shkallëzuar elemente të pavarura. */
   delay?: number;
   className?: string;
-  as?: 'div' | 'section' | 'li' | 'article';
+  as?: ElementTag;
 };
 
-/**
- * Animacion i butë "fade-up" kur seksioni hyn në ekran.
- * Respekton `prefers-reduced-motion` dhe nuk përsëritet pas herës së parë.
- */
+/** Animacion i butë "fade-up" kur elementi hyn në ekran. Nuk përsëritet. */
 export function Reveal({ children, delay = 0, className, as = 'div' }: RevealProps) {
   const reduceMotion = useReducedMotion();
   const Component = motion[as];
 
+  if (reduceMotion) {
+    const Plain = as;
+    return <Plain className={className}>{children}</Plain>;
+  }
+
   return (
     <Component
       className={className}
-      initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 18 }}
+      // Shënohet që CSS-ja te <noscript> ta bëjë të dukshëm nëse JS nuk vjen.
+      data-reveal=""
+      initial={{ opacity: 0, y: DISTANCE }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.55, delay, ease: EASE }}
     >
+      {children}
+    </Component>
+  );
+}
+
+type StaggerProps = {
+  children: ReactNode;
+  className?: string;
+  as?: 'div' | 'ul' | 'ol';
+  /** Vonesa para se të nisë elementi i parë. */
+  delay?: number;
+};
+
+/**
+ * Kontejner liste: fëmijët e mbështjellë me <StaggerItem> hyjnë njëri pas
+ * tjetrit. Vetëm kontejneri e vëzhgon ekranin, jo çdo element veç e veç.
+ */
+export function Stagger({ children, className, as = 'div', delay = 0 }: StaggerProps) {
+  const reduceMotion = useReducedMotion();
+  const Component = motion[as];
+
+  if (reduceMotion) {
+    const Plain = as;
+    return <Plain className={className}>{children}</Plain>;
+  }
+
+  return (
+    <Component
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.15 }}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: STAGGER_STEP, delayChildren: delay } },
+      }}
+    >
+      {children}
+    </Component>
+  );
+}
+
+type StaggerItemProps = {
+  children: ReactNode;
+  className?: string;
+  as?: ElementTag;
+};
+
+/** Një element brenda <Stagger>. Radhën e cakton kontejneri. */
+export function StaggerItem({ children, className, as = 'div' }: StaggerItemProps) {
+  const reduceMotion = useReducedMotion();
+  const Component = motion[as];
+
+  if (reduceMotion) {
+    const Plain = as;
+    return <Plain className={className}>{children}</Plain>;
+  }
+
+  return (
+    <Component className={className} data-reveal="" variants={itemVariants}>
       {children}
     </Component>
   );

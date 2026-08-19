@@ -204,6 +204,31 @@ lib/whatsapp.ts               Ndërtimi i lidhjeve wa.me
 public/logo.svg               Logoja (vendmbajtëse)
 ```
 
+## Animacionet dhe ndërveprimet
+
+Të gjitha realizohen me Framer Motion dhe Tailwind — **pa asnjë varësi shtesë**
+— dhe animojnë vetëm `transform` dhe `opacity`, që të mos prodhojnë zhvendosje
+layout-i.
+
+| Elementi | Skedari |
+| --- | --- |
+| Ngarkuesi i faqes (vetëm vizita e parë e sesionit) | `components/PageLoader.tsx` |
+| Kalimi mes faqeve | `app/template.tsx` |
+| Hyrja në skrollim, me radhë për listat | `components/Reveal.tsx` |
+| Navbar që ngushtohet, me tregues të faqes aktive | `components/Navbar.tsx` |
+| Skelet me shkëlqim gjatë ngarkimit të fotove | `components/SmartImage.tsx` |
+| Butona, kartela, shirit skrollimi, ngjyra e përzgjedhjes | `app/globals.css` |
+
+Tri garanci që nuk duhen prishur kur shtohen animacione të reja:
+
+1. **`prefers-reduced-motion` çaktivizon gjithçka.** Komponentët e Framer
+   kthejnë element të thjeshtë, dhe CSS-ja anulon çdo `transform` e `animation`.
+2. **Faqja funksionon pa JavaScript.** Ngarkuesi largohet me animacion CSS, jo
+   me skript; dhe elementet që nisin me `opacity: 0` mbajnë atributin
+   `data-reveal`, të cilin një rregull te `<noscript>` e bën të dukshëm.
+3. **Faqet mbeten statike.** `"use client"` shtohet vetëm te komponentët që e
+   kërkojnë — asnjëherë te një faqe e tërë.
+
 ## SEO dhe qasshmëria
 
 - Metadata shqip për çdo faqe, Open Graph dhe foto ndarjeje e gjeneruar
