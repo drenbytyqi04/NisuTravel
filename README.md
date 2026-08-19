@@ -13,10 +13,13 @@ WhatsApp-it dhe formularit të kontaktit**, jo përmes një motori rezervimesh.
 | [Next.js 15](https://nextjs.org) (App Router) | Struktura e faqes, gjenerimi statik, SEO |
 | TypeScript | Siguri tipesh në të dhëna dhe komponentë |
 | [Tailwind CSS](https://tailwindcss.com) | Stilizimi |
-| [Framer Motion](https://www.framer.com/motion/) | Animacione të buta gjatë skrollimit |
+| [Motion](https://motion.dev) | Animacione të buta gjatë skrollimit |
 | `next/font` | Bebas Neue (tituj) + Jost (tekst) |
 
 Pa CMS: e gjithë përmbajtja qëndron në skedarë të tipizuar brenda `/data`.
+
+> Motion është e njëjta bibliotekë që më parë quhej `framer-motion`; të dyja
+> paketat publikohen nga i njëjti repo. Importet bëhen nga `motion/react`.
 
 ## Instalimi
 
@@ -206,7 +209,7 @@ public/logo.svg               Logoja (vendmbajtëse)
 
 ## Animacionet dhe ndërveprimet
 
-Të gjitha realizohen me Framer Motion dhe Tailwind — **pa asnjë varësi shtesë**
+Të gjitha realizohen me Motion dhe Tailwind — **pa asnjë varësi shtesë**
 — dhe animojnë vetëm `transform` dhe `opacity`, që të mos prodhojnë zhvendosje
 layout-i.
 
@@ -221,7 +224,7 @@ layout-i.
 
 Tri garanci që nuk duhen prishur kur shtohen animacione të reja:
 
-1. **`prefers-reduced-motion` çaktivizon gjithçka.** Komponentët e Framer
+1. **`prefers-reduced-motion` çaktivizon gjithçka.** Komponentët e Motion
    kthejnë element të thjeshtë, dhe CSS-ja anulon çdo `transform` e `animation`.
 2. **Faqja funksionon pa JavaScript.** Ngarkuesi largohet me animacion CSS, jo
    me skript; dhe elementet që nisin me `opacity: 0` mbajnë atributin
