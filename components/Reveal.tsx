@@ -32,6 +32,18 @@ const itemVariants: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
 };
 
+/**
+ * Variant vetëm me rrëshqitje, pa zbehje.
+ *
+ * Përdoret për tekstin mbi palosje (hero-t): elementi është i dukshëm që në
+ * kuadrin e parë, prandaj nuk e vonon matjen e LCP-së — thjesht rrëshqet në
+ * vend. Zbehja mbetet për përmbajtjen nën palosje.
+ */
+const slideVariants: Variants = {
+  hidden: { y: DISTANCE },
+  show: { y: 0, transition: { duration: 0.55, ease: EASE } },
+};
+
 type ElementTag = 'div' | 'section' | 'li' | 'article';
 
 type RevealProps = {
@@ -108,10 +120,15 @@ type StaggerItemProps = {
   children: ReactNode;
   className?: string;
   as?: ElementTag;
+  /**
+   * `false` = vetëm rrëshqitje, pa zbehje. Përdoreni për tekst mbi palosje,
+   * që të mos vonohet LCP-ja.
+   */
+  fade?: boolean;
 };
 
 /** Një element brenda <Stagger>. Radhën e cakton kontejneri. */
-export function StaggerItem({ children, className, as = 'div' }: StaggerItemProps) {
+export function StaggerItem({ children, className, as = 'div', fade = true }: StaggerItemProps) {
   const reduceMotion = useReducedMotion();
   const Component = motion[as];
 
@@ -121,7 +138,11 @@ export function StaggerItem({ children, className, as = 'div' }: StaggerItemProp
   }
 
   return (
-    <Component className={className} data-reveal="" variants={itemVariants}>
+    <Component
+      className={className}
+      data-reveal=""
+      variants={fade ? itemVariants : slideVariants}
+    >
       {children}
     </Component>
   );

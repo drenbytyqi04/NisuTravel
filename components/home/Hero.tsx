@@ -1,5 +1,6 @@
 import { Logo } from '@/components/Logo';
 import { SmartImage } from '@/components/SmartImage';
+import { Stagger, StaggerItem } from '@/components/Reveal';
 import { WhatsAppIcon, ArrowRightIcon } from '@/components/Icons';
 import { HowItWorks } from '@/components/home/HowItWorks';
 import { media } from '@/data/media';
@@ -32,18 +33,29 @@ export function Hero() {
         />
 
         <div className="container-content relative flex min-h-[92svh] flex-col justify-center pb-24 pt-28 lg:min-h-[88svh]">
-          <div className="max-w-2xl">
-            <Logo width={200} linked={false} className="h-auto w-[168px] sm:w-[200px]" />
+          {/*
+            Elementet e hero-s rrëshqasin njëri pas tjetrit, POR pa zbehje:
+            teksti është i dukshëm që në kuadrin e parë, prandaj animacioni nuk
+            e vonon LCP-në.
+          */}
+          <Stagger className="max-w-2xl">
+            <StaggerItem fade={false}>
+              <Logo width={200} linked={false} className="h-auto w-[168px] sm:w-[200px]" />
+            </StaggerItem>
 
-            <h1 className="mt-8 font-display text-6xl leading-[0.9] text-white sm:text-7xl lg:text-8xl">
-              Nisu me ne
-            </h1>
+            <StaggerItem fade={false}>
+              <h1 className="mt-8 font-display text-6xl leading-[0.9] text-white sm:text-7xl lg:text-8xl">
+                Nisu me ne
+              </h1>
+            </StaggerItem>
 
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/90 sm:text-xl">
-              Bileta ajrore, hotele dhe aranzhmane turistike — të organizuara për ty.
-            </p>
+            <StaggerItem fade={false}>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/90 sm:text-xl">
+                Bileta ajrore, hotele dhe aranzhmane turistike — të organizuara për ty.
+              </p>
+            </StaggerItem>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <StaggerItem fade={false} className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a href="#kerko-oferte" className="btn bg-white text-emerald-deep shadow-soft hover:bg-emerald-soft">
                 Kërko ofertë
                 <ArrowRightIcon className="h-4 w-4" />
@@ -57,8 +69,8 @@ export function Hero() {
                 <WhatsAppIcon className="h-5 w-5" />
                 Shkruaj në WhatsApp
               </a>
-            </div>
-          </div>
+            </StaggerItem>
+          </Stagger>
         </div>
       </div>
 

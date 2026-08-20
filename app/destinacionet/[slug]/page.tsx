@@ -91,14 +91,18 @@ export default async function DestinationPage({ params }: PageProps) {
             </div>
 
             <h2 className="mt-12 font-display text-3xl tracking-wide">Çfarë përfshihet</h2>
-            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+            <Stagger as="ul" className="mt-6 grid gap-4 sm:grid-cols-2">
               {destination.highlights.map((highlight) => (
-                <li key={highlight} className="flex gap-3 rounded-2xl bg-white p-5 shadow-soft">
+                <StaggerItem
+                  as="li"
+                  key={highlight}
+                  className="flex gap-3 rounded-2xl bg-white p-5 shadow-soft transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-lift motion-reduce:transform-none"
+                >
                   <CheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-mid" />
                   <span className="text-sm leading-relaxed text-charcoal/80">{highlight}</span>
-                </li>
+                </StaggerItem>
               ))}
-            </ul>
+            </Stagger>
           </Reveal>
 
           {/* Kartela e kërkesës — ngjitëse në desktop. */}

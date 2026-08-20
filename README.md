@@ -217,10 +217,29 @@ layout-i.
 | --- | --- |
 | Ngarkuesi i faqes (vetëm vizita e parë e sesionit) | `components/PageLoader.tsx` |
 | Kalimi mes faqeve | `app/template.tsx` |
-| Hyrja në skrollim, me radhë për listat | `components/Reveal.tsx` |
-| Navbar që ngushtohet, me tregues të faqes aktive | `components/Navbar.tsx` |
+| Primitivat: `Reveal`, `Stagger`, `StaggerItem` | `components/Reveal.tsx` |
+| Navbar që ngushtohet, tregues i faqes aktive, meny mobile e animuar | `components/Navbar.tsx` |
 | Skelet me shkëlqim gjatë ngarkimit të fotove | `components/SmartImage.tsx` |
-| Butona, kartela, shirit skrollimi, ngjyra e përzgjedhjes | `app/globals.css` |
+| Gjendjet e formularit (sukses, gabim) | `app/kontakti/ContactForm.tsx` |
+| Butona, kartela, shirit skrollimi, ngjyra e përzgjedhjes, Ken Burns | `app/globals.css` |
+
+Të gjitha seksionet e faqes janë të mbuluara: hero-t, shërbimet, destinacionet,
+arsyet, banda e diasporës, vlerësimet, banda e CTA-së, footer-i dhe faqja 404.
+
+### Kur të shtoni animacione të reja
+
+Përdorni primitivat ekzistuese, jo `motion` drejtpërdrejt:
+
+```tsx
+<Stagger as="ul" className="grid gap-6">
+  {items.map((item) => (
+    <StaggerItem as="li" key={item.id}>…</StaggerItem>
+  ))}
+</Stagger>
+```
+
+Për tekst **mbi palosje** shtoni `fade={false}`: elementi rrëshqet pa u zbehur,
+prandaj është i dukshëm që në kuadrin e parë dhe nuk e vonon matjen e LCP-së.
 
 Tri garanci që nuk duhen prishur kur shtohen animacione të reja:
 

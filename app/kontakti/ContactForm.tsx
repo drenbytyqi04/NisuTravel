@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useState, type FormEvent } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { ArrowRightIcon, CheckIcon } from '@/components/Icons';
 
 type Fields = {
@@ -32,6 +33,7 @@ function validate(values: Fields): FieldErrors {
 
 export function ContactForm() {
   const id = useId();
+  const reduceMotion = useReducedMotion();
   const [values, setValues] = useState<Fields>(empty);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>('idle');
@@ -92,10 +94,21 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="card p-8 text-center sm:p-10" role="status">
-        <span className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-soft text-emerald-deep">
+      <motion.div
+        className="card p-8 text-center sm:p-10"
+        role="status"
+        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: reduceMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <motion.span
+          className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-soft text-emerald-deep"
+          initial={reduceMotion ? false : { scale: 0.6 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: reduceMotion ? 0 : 0.45, delay: reduceMotion ? 0 : 0.1, ease: [0.34, 1.4, 0.5, 1] }}
+        >
           <CheckIcon className="h-8 w-8" />
-        </span>
+        </motion.span>
         <h2 className="mt-6 font-display text-3xl tracking-wide">Faleminderit!</h2>
         <p className="mt-3 leading-relaxed text-charcoal/70">{feedback}</p>
         <button
@@ -109,7 +122,7 @@ export function ContactForm() {
           Dërgo një kërkesë tjetër
           <ArrowRightIcon className="h-4 w-4" />
         </button>
-      </div>
+      </motion.div>
     );
   }
 
@@ -190,11 +203,20 @@ export function ContactForm() {
         </div>
       </div>
 
-      {status === 'error' && feedback ? (
-        <p role="alert" className="mt-6 rounded-2xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
-          {feedback}
-        </p>
-      ) : null}
+      <AnimatePresence>
+        {status === 'error' && feedback ? (
+          <motion.p
+            role="alert"
+            className="mt-6 overflow-hidden rounded-2xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+            initial={reduceMotion ? false : { opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -6 }}
+            transition={{ duration: reduceMotion ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {feedback}
+          </motion.p>
+        ) : null}
+      </AnimatePresence>
 
       <button type="submit" disabled={status === 'sending'} className="btn-primary mt-8 w-full sm:w-auto">
         {status === 'sending' ? 'Duke dërguar…' : 'Dërgo kërkesën'}

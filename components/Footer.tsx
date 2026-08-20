@@ -9,6 +9,7 @@ import {
   PhoneIcon,
   WhatsAppIcon,
 } from '@/components/Icons';
+import { Stagger, StaggerItem } from '@/components/Reveal';
 import { site } from '@/data/site';
 import { whatsappUrl } from '@/lib/whatsapp';
 
@@ -22,8 +23,8 @@ const pages = [
 export function Footer() {
   return (
     <footer className="bg-charcoal text-white/80">
-      <div className="container-content grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4 lg:py-20">
-        <div className="lg:col-span-1">
+      <Stagger className="container-content grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4 lg:py-20">
+        <StaggerItem className="lg:col-span-1">
           <Logo width={168} className="h-auto w-[150px]" />
           <p className="mt-5 max-w-xs text-sm leading-relaxed">
             Agjenci udhëtimi në Prishtinë. Bileta ajrore, hotele dhe aranzhmane
@@ -52,28 +53,30 @@ export function Footer() {
               href={whatsappUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-white transition-colors hover:bg-white/20"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-white transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-white/20 motion-reduce:transform-none"
             >
               <span className="sr-only">Shkruaj në WhatsApp</span>
               <WhatsAppIcon className="h-5 w-5" />
             </a>
           </div>
-        </div>
+        </StaggerItem>
 
-        <nav aria-label="Faqet">
-          <h2 className="font-display text-xl tracking-widest text-white">Faqet</h2>
-          <ul className="mt-5 space-y-3 text-sm">
-            {pages.map((page) => (
-              <li key={page.href}>
-                <Link href={page.href} className="transition-colors hover:text-white">
-                  {page.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <StaggerItem>
+          <nav aria-label="Faqet">
+            <h2 className="font-display text-xl tracking-widest text-white">Faqet</h2>
+            <ul className="mt-5 space-y-3 text-sm">
+              {pages.map((page) => (
+                <li key={page.href}>
+                  <Link href={page.href} className="transition-colors hover:text-white">
+                    {page.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </StaggerItem>
 
-        <div>
+        <StaggerItem>
           <h2 className="font-display text-xl tracking-widest text-white">Kontakti</h2>
           <ul className="mt-5 space-y-4 text-sm">
             <li className="flex gap-3">
@@ -97,9 +100,9 @@ export function Footer() {
               </address>
             </li>
           </ul>
-        </div>
+        </StaggerItem>
 
-        <div>
+        <StaggerItem>
           <h2 className="font-display text-xl tracking-widest text-white">Orari</h2>
           <ul className="mt-5 space-y-3 text-sm">
             {site.hours.map((entry) => (
@@ -112,8 +115,8 @@ export function Footer() {
               </li>
             ))}
           </ul>
-        </div>
-      </div>
+        </StaggerItem>
+      </Stagger>
 
       <div className="border-t border-white/10">
         <div className="container-content flex flex-col gap-2 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">

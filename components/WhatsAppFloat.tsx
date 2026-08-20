@@ -1,5 +1,7 @@
 'use client';
 
+import { motion, useReducedMotion } from 'motion/react';
+
 import { WhatsAppIcon } from '@/components/Icons';
 import { whatsappUrl } from '@/lib/whatsapp';
 
@@ -9,8 +11,14 @@ import { whatsappUrl } from '@/lib/whatsapp';
  * butoni i WhatsApp-it është pjesë e navbar-it.
  */
 export function WhatsAppFloat() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <a
+    <motion.a
+      // Hyn pasi faqja të jetë vendosur, që të mos konkurrojë me hero-n.
+      initial={reduceMotion ? false : { opacity: 0, scale: 0.7 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.8, ease: [0.22, 1, 0.36, 1] }}
       href={whatsappUrl()}
       target="_blank"
       rel="noopener noreferrer"
@@ -18,6 +26,6 @@ export function WhatsAppFloat() {
     >
       <span className="sr-only">Shkruaj në WhatsApp</span>
       <WhatsAppIcon className="h-7 w-7" />
-    </a>
+    </motion.a>
   );
 }

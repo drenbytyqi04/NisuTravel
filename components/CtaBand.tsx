@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRightIcon, WhatsAppIcon } from '@/components/Icons';
-import { Reveal } from '@/components/Reveal';
+import { Stagger, StaggerItem } from '@/components/Reveal';
 import { SmartImage } from '@/components/SmartImage';
 import { media } from '@/data/media';
 import { whatsappUrl } from '@/lib/whatsapp';
@@ -26,10 +26,18 @@ export function CtaBand({
       />
       <div aria-hidden="true" className="absolute inset-0 bg-charcoal/75" />
 
-      <Reveal className="container-content relative py-20 text-center lg:py-24">
-        <h2 className="section-title mx-auto max-w-3xl text-white">{title}</h2>
-        <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/80">{description}</p>
-        <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+      <Stagger className="container-content relative py-20 text-center lg:py-24">
+        <StaggerItem>
+          <h2 className="section-title mx-auto max-w-3xl text-white">{title}</h2>
+        </StaggerItem>
+
+        <StaggerItem>
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/80">
+            {description}
+          </p>
+        </StaggerItem>
+
+        <StaggerItem className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
           <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="btn-whatsapp">
             <WhatsAppIcon className="h-5 w-5" />
             Shkruaj në WhatsApp
@@ -38,8 +46,8 @@ export function CtaBand({
             Plotëso formularin
             <ArrowRightIcon className="h-4 w-4" />
           </Link>
-        </div>
-      </Reveal>
+        </StaggerItem>
+      </Stagger>
     </section>
   );
 }

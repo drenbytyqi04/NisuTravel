@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { Logo } from '@/components/Logo';
 import { CloseIcon, MenuIcon, WhatsAppIcon } from '@/components/Icons';
@@ -125,36 +125,43 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Menyja mobile */}
-      <div
-        id="menu-mobil"
-        hidden={!menuOpen}
-        className="border-t border-white/15 bg-emerald-deep lg:hidden"
-      >
-        <ul className="container-content flex flex-col gap-1 py-4">
-          {links.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className="block rounded-xl px-4 py-3 text-base font-medium text-white transition-colors hover:bg-white/15"
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-          <li className="pt-2">
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp w-full"
-            >
-              <WhatsAppIcon className="h-5 w-5" />
-              Shkruaj në WhatsApp
-            </a>
-          </li>
-        </ul>
-      </div>
+      {/* Menyja mobile — hapet me zbehje dhe rrëshqitje të shkurtër. */}
+      <AnimatePresence initial={false}>
+        {menuOpen ? (
+          <motion.div
+            id="menu-mobil"
+            className="overflow-hidden border-t border-white/15 bg-emerald-deep lg:hidden"
+            initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -8 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <ul className="container-content flex flex-col gap-1 py-4">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="block rounded-xl px-4 py-3 text-base font-medium text-white transition-colors hover:bg-white/15"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-2">
+                <a
+                  href={whatsappUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-whatsapp w-full"
+                >
+                  <WhatsAppIcon className="h-5 w-5" />
+                  Shkruaj në WhatsApp
+                </a>
+              </li>
+            </ul>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }

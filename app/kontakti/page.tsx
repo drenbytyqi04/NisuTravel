@@ -9,7 +9,7 @@ import {
 } from '@/components/Icons';
 import { ContactForm } from '@/app/kontakti/ContactForm';
 import { PageHero } from '@/components/PageHero';
-import { Reveal } from '@/components/Reveal';
+import { Reveal, Stagger, StaggerItem } from '@/components/Reveal';
 import { media } from '@/data/media';
 import { site } from '@/data/site';
 import { whatsappUrl } from '@/lib/whatsapp';
@@ -58,8 +58,8 @@ export default function ContactPage() {
                 Shkruaj në WhatsApp
               </a>
 
-              <ul className="mt-8 space-y-5 text-sm">
-                <li className="flex gap-3">
+              <Stagger as="ul" className="mt-8 space-y-5 text-sm">
+                <StaggerItem as="li" className="flex gap-3">
                   <PhoneIcon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-mid" />
                   <span>
                     <span className="block text-charcoal/50">Telefoni</span>
@@ -67,8 +67,8 @@ export default function ContactPage() {
                       {site.contact.phoneDisplay}
                     </a>
                   </span>
-                </li>
-                <li className="flex gap-3">
+                </StaggerItem>
+                <StaggerItem as="li" className="flex gap-3">
                   <MailIcon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-mid" />
                   <span>
                     <span className="block text-charcoal/50">Emaili</span>
@@ -76,8 +76,8 @@ export default function ContactPage() {
                       {site.contact.email}
                     </a>
                   </span>
-                </li>
-                <li className="flex gap-3">
+                </StaggerItem>
+                <StaggerItem as="li" className="flex gap-3">
                   <InstagramIcon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-mid" />
                   <span>
                     <span className="block text-charcoal/50">Instagram</span>
@@ -90,8 +90,8 @@ export default function ContactPage() {
                       {site.social.instagram.handle}
                     </a>
                   </span>
-                </li>
-                <li className="flex gap-3">
+                </StaggerItem>
+                <StaggerItem as="li" className="flex gap-3">
                   <MapPinIcon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-mid" />
                   <span>
                     <span className="block text-charcoal/50">Zyra</span>
@@ -99,8 +99,8 @@ export default function ContactPage() {
                       {site.address.street}, {site.address.postalCode} {site.address.city}
                     </address>
                   </span>
-                </li>
-                <li className="flex gap-3">
+                </StaggerItem>
+                <StaggerItem as="li" className="flex gap-3">
                   <ClockIcon className="mt-0.5 h-5 w-5 shrink-0 text-emerald-mid" />
                   <span>
                     <span className="block text-charcoal/50">Orari</span>
@@ -110,8 +110,8 @@ export default function ContactPage() {
                       </span>
                     ))}
                   </span>
-                </li>
-              </ul>
+                </StaggerItem>
+              </Stagger>
             </div>
 
             <MapPlaceholder />
